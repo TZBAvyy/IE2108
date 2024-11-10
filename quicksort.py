@@ -17,5 +17,4 @@ if __name__=='__main__':
     arr = list(range(10))
     shuffle(arr)
     print(arr)
-    arr = quickSort(arr)
-    print(arr)
+    print(quickSort(arr))
