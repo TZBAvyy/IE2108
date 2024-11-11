@@ -1,3 +1,4 @@
+from random import randint
 class BST:
     class Node:
         def __init__(self, data):
@@ -86,29 +87,67 @@ class BST:
             print(f'{path} {root}'.rjust(height*8))
             self._inorder(root.right, height+1, "\\")
 
+    def create_Instance(height:int):
+        #Input: height of BST to be created (Max height: 3)
+        #Output: BST instance of height height with random data
+        b = BST()
+        b.insert(randint(30*height,50*height))
+        print("Generating Tree...")
+        queue = [b.root]
+        nodesCreated = 1
+        while nodesCreated < 2**(height+1)-1:
+            vertex = queue.pop(0)
+            if vertex.parent == None:
+                right = randint(vertex.data*height, vertex.data*height+50)
+                left = randint(vertex.data//height-30, vertex.data//height)
+
+            elif vertex.parent.data > vertex.data: #Vertex is left of parent
+                #Parent > Right Child > Vertex
+                right = randint(vertex.data+2, vertex.parent.data-2)
+                #Parent > Vertex > Left Child
+                left = randint(vertex.data//height-30, vertex.data-2)
+
+            elif vertex.parent.data < vertex.data: #Vertex is right of parent
+                #Parent < Left Child < Vertex
+                left = randint(vertex.parent.data+2, vertex.data-2)
+                #Parent < Vertex < Left Child
+                right = randint(vertex.data+2, vertex.data*height+30)
+            b.insert(right)
+            b.insert(left)
+            queue.append(vertex.right)
+            queue.append(vertex.left)
+            nodesCreated += 2
+        b.print()
+        print("Tree generated above!")
+        return b
+        
+
+
 if __name__=='__main__':
-    b = BST()
-    b.insert(14)
-    b.insert(10)
-    b.insert(12)
-    b.insert(20)
-    b.insert(11)
-    b.insert(15)
-    b.insert(40)
-    b.insert(7)
-    b.insert(1)
-    b.insert(100)
-    b.insert(9)
-    b.print()
-    print("DELETING 10 NOW")
-    b.delete(10)
-    b.print()
-    print("DELETING 14 NOW")
-    b.delete(14)
-    b.print()
-    print("DELETING 100 NOW")
-    b.delete(100)
-    b.print()
-    print("DELETING 7 NOW")
-    b.delete(7)
-    b.print()
+    # b = BST()
+    # b.insert(14)
+    # b.insert(10)
+    # b.insert(12)
+    # b.insert(20)
+    # b.insert(11)
+    # b.insert(15)
+    # b.insert(40)
+    # b.insert(7)
+    # b.insert(1)
+    # b.insert(100)
+    # b.insert(9)
+    # b.print()
+    # print("DELETING 10 NOW")
+    # b.delete(10)
+    # b.print()
+    # print("DELETING 14 NOW")
+    # b.delete(14)
+    # b.print()
+    # print("DELETING 100 NOW")
+    # b.delete(100)
+    # b.print()
+    # print("DELETING 7 NOW")
+    # b.delete(7)
+    # b.print()
+    a = BST.create_Instance(3)
+    
